@@ -1,0 +1,43 @@
+#include "ZStateEstimator.h"
+#include <math.h>
+#include "Printer.h"
+extern Printer printer;
+
+ZStateEstimator::ZStateEstimator(void)
+  : DataSource("z","float") // from DataSource
+{}
+
+void ZStateEstimator::init(void) {
+  state.z = 0;
+  String calibrationMessage = "Pressure Sensor Voltage: " + String(10);
+  printer.printMessage(calibrationMessage,20);
+}
+
+void ZStateEstimator::updateState(int pressure_signal) {
+  // get z (depth)
+  float pressure_voltage = (double)pressure_signal;
+  pressure_voltage *= (3.3/float(1023));  // convert from Teensy units to Volts
+  //String printString = "Current pressure: ";
+  //printString += String(pressure_voltage);
+  //printer.printMessage(printString,20);
+  state.z = depthCal_slope * pressure_voltage + depthCal_intercept; // convert from Volts to depth [m]
+
+  // uncomment the following print statement to calibrate your pressure sensor with the Teensy using the Serial Moniter
+  String calibrationMessage = "Pressure Sensor Voltage: " + String(pressure_voltage);
+  printer.printMessage(calibrationMessage,1);
+}
+
+String ZStateEstimator::printState(void) {
+  String currentState = "";
+  int decimals = 2;
+  currentState += "Z_State: z: ";
+  currentState += String(state.z,decimals);
+  currentState += "[m]";
+  return currentState;
+}
+
+size_t ZStateEstimator::writeDataBytes(unsigned char * buffer, size_t idx) {
+    float * data_slot = (float *) &buffer[idx];
+    data_slot[0] = state.z;
+    return idx + sizeof(float);
+}
