@@ -63,9 +63,8 @@ void SurfaceControl::navigate(xy_state_t *state, gps_state_t *gps_state_p, int c
     int y_des = getWayPoint(1);
     y = abs((state->y)-y_init);
     x = abs((state->x)-x_init);
-    float ex = x_des - x;
-    float ey = y_des - y;
-    //if distance is greater then...print out values
+    float ex = 0.5*(x_des - x);
+    float ey = 0.5*(y_des - y);
     uL = Kl * ex;
     uR = Kr * ey;
     // Set the values of yaw_des, yaw, control effort (u), uL, and uR appropriately for P control
