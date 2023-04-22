@@ -60,7 +60,7 @@ const int waypoint_dimensions = 2;       // waypoint dimensions (x,y)           
 double waypoints [] = { 0, 0};   // listed as x0,y0,x1,y1, ... etc. //desired location at 0, or could move to different x,y points, have plus hour for time 
 
 //Depth Control Points
-int diveDelay = 40000; // how long robot will stay at depth waypoint before continuing (ms)
+int diveDelay = 120000; // how long robot will stay at depth waypoint before continuing (ms)
 //25 total seconds at each depth
 const int num_depth_waypoints = 10;
 double depth_waypoints [] = {0.3,0.6,0.9,1.2,1.5,1.8,2.1,2.4,2.7,3} ; // listed as z0,z1,... etc.
