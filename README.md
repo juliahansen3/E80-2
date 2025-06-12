@@ -1,3 +1,5 @@
+# Updated surface and depth control files for specific application to our robot. See below on more information about the overall repository.
+-----------------------------------------------------------------------
 # E80-AUV
 Arduino project for the Teensy microcontroller used for the HMC E80 AUV.
 
